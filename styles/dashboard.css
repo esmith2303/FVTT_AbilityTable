@@ -35,7 +35,7 @@ thead th {
   align-items: center; /* vertically center buttons */
   height: auto;            /* let container height be based on content */
   min-height: 0;           /* ensure no min-height forcing stretching */
-  max-height:45px;
+  max-height:35px;
 }
 
 /* Tab buttons styling */
