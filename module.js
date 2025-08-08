@@ -25,23 +25,22 @@ Hooks.once('ready', async () => {
   }`;
 
   if (macro) {
-    // Always update macro command & icon
     await macro.update({
       command: command,
       img: "icons/svg/statue.svg"
     });
 
-    // Check if macro is on hotbar anywhere
     const hotbar = game.user.hotbar;
     const macroId = macro.id;
-    const isOnHotbar = [...hotbar.entries()].some(([, id]) => id === macroId);
+
+    // Use Object.entries since hotbar is an object, not a Map
+    const isOnHotbar = Object.entries(hotbar).some(([, id]) => id === macroId);
 
     if (!isOnHotbar) {
-      // Assign to next free hotbar slot
       const maxSlots = 50;
       let freeSlot = null;
       for (let i = 1; i <= maxSlots; i++) {
-        if (!hotbar.get(i)) {
+        if (!hotbar[i]) {
           freeSlot = i;
           break;
         }
@@ -56,7 +55,6 @@ Hooks.once('ready', async () => {
       console.log("Stats Dashboard macro already on hotbar; no action taken.");
     }
   } else {
-    // Create macro and assign to next free hotbar slot
     macro = await Macro.create({
       name: macroName,
       type: "script",
@@ -69,7 +67,7 @@ Hooks.once('ready', async () => {
     const maxSlots = 50;
     let freeSlot = null;
     for (let i = 1; i <= maxSlots; i++) {
-      if (!hotbar.get(i)) {
+      if (!hotbar[i]) {
         freeSlot = i;
         break;
       }
