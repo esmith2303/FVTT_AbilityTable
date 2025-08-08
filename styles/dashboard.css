@@ -30,12 +30,12 @@ thead th {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
   justify-content: center;
   align-items: center; /* vertically center buttons */
   height: auto;            /* let container height be based on content */
   min-height: 0;           /* ensure no min-height forcing stretching */
-  flex-shrink: 0;  
+  max-height:45px;
 }
 
 /* Tab buttons styling */
