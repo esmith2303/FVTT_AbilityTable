@@ -17,13 +17,13 @@ export class StatsDashboard extends Application {
 
     // Re-render dashboard whenever actor data changes
     Hooks.on("updateActor", (actor) => {
-      if (actor.data.type === "character" && this.rendered) this.render();
+      if (actor.type === "character" && this.rendered) this.render();
     });
     Hooks.on("createActor", (actor) => {
-      if (actor.data.type === "character" && this.rendered) this.render();
+      if (actor.type === "character" && this.rendered) this.render();
     });
     Hooks.on("deleteActor", (actor) => {
-      if (actor.data.type === "character" && this.rendered) this.render();
+      if (actor.type === "character" && this.rendered) this.render();
     });
   }
 
@@ -58,7 +58,7 @@ export class StatsDashboard extends Application {
         // Prepare skill scores
         let skillScores = {};
         for (let [skill, ability] of Object.entries(skills)) {
-          const skillData = actor.data.data.skills?.[skill];
+          const skillData = actor.system.skills?.[skill];
           skillScores[skill] = skillData?.total ?? "N/A";
         }
 
