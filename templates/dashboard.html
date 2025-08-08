@@ -1,0 +1,20 @@
+<table class="stats-table">
+  <thead>
+    <tr>
+      <th>Ability</th>
+      {{#each characters}}
+        <th>{{name}}</th>
+      {{/each}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each abilities as |ability idx|}}
+      <tr>
+        <td>{{ability}}</td>
+        {{#each ../characters}}
+          <td>{{abilities.[idx]}}</td>
+        {{/each}}
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -1,0 +1,23 @@
+.stats-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.stats-table th, .stats-table td {
+  border: 1px solid #666;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.stats-table th {
+  background: #333;
+  color: white;
+}
+
+.stats-table tr:nth-child(even) {
+  background: #222;
+}
+
+.stats-table tr:nth-child(odd) {
+  background: #111;
+}
