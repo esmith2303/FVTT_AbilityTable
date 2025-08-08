@@ -7,12 +7,14 @@ table {
   border-collapse: collapse;
   width: 100%;
   font-family: Arial, sans-serif;
+  table-layout: fixed; /* Prevent cells from stretching too much */
 }
 
 th, td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
+  word-wrap: break-word; /* Allow long content to wrap */
 }
 
 thead th {
@@ -21,4 +23,44 @@ thead th {
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+/* Tabs container - flex layout for buttons */
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+/* Tab buttons styling */
+.tabs button {
+  max-width: 150px;
+  width: auto;
+  padding: 6px 12px;
+  font-size: 14px;
+  white-space: nowrap;
+  box-sizing: border-box;
+  cursor: pointer;
+  border: 1px solid #444;
+  background-color: #eee;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.tabs button:hover,
+.tabs button.active {
+  background-color: #444;
+  color: white;
+  border-color: #222;
+}
+
+/* If you have buttons inside table cells */
+table td button {
+  max-width: 150px;
+  width: auto;
+  padding: 6px 12px;
+  font-size: 14px;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
