@@ -25,15 +25,38 @@ Hooks.once('ready', async () => {
   }`;
 
   if (macro) {
-    // Update macro command & img but keep current hotbar assignment
+    // Always update macro command & icon
     await macro.update({
       command: command,
       img: "icons/svg/statue.svg"
     });
 
-    console.log(`Stats Dashboard macro already exists with ID ${macro.id}`);
+    // Check if macro is on hotbar anywhere
+    const hotbar = game.user.hotbar;
+    const macroId = macro.id;
+    const isOnHotbar = [...hotbar.entries()].some(([, id]) => id === macroId);
+
+    if (!isOnHotbar) {
+      // Assign to next free hotbar slot
+      const maxSlots = 50;
+      let freeSlot = null;
+      for (let i = 1; i <= maxSlots; i++) {
+        if (!hotbar.get(i)) {
+          freeSlot = i;
+          break;
+        }
+      }
+      if (freeSlot !== null) {
+        await macro.assignHotbar(freeSlot);
+        console.log(`Assigned existing Stats Dashboard macro to hotbar slot ${freeSlot}`);
+      } else {
+        console.warn("No free hotbar slots available to assign the existing Stats Dashboard macro.");
+      }
+    } else {
+      console.log("Stats Dashboard macro already on hotbar; no action taken.");
+    }
   } else {
-    // Create macro and assign to first free hotbar slot
+    // Create macro and assign to next free hotbar slot
     macro = await Macro.create({
       name: macroName,
       type: "script",
@@ -43,20 +66,17 @@ Hooks.once('ready', async () => {
     });
 
     const hotbar = game.user.hotbar;
-    const slots = 50;
+    const maxSlots = 50;
     let freeSlot = null;
-
-    for (let i = 1; i <= slots; i++) {
-      // For Foundry VTT, hotbar is a Map, so use get()
+    for (let i = 1; i <= maxSlots; i++) {
       if (!hotbar.get(i)) {
         freeSlot = i;
         break;
       }
     }
-
     if (freeSlot !== null) {
       await macro.assignHotbar(freeSlot);
-      console.log(`Assigned new Stats Dashboard macro to hotbar slot ${freeSlot}`);
+      console.log(`Created and assigned new Stats Dashboard macro to hotbar slot ${freeSlot}`);
     } else {
       console.warn("No free hotbar slots available to assign the new Stats Dashboard macro.");
     }
