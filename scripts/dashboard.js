@@ -82,5 +82,7 @@ const playerData = players.map(actor => {
   };
 });
 
-  console.log(playerData);
+  return {
+    players: playerData
+  };
   }}
