@@ -30,6 +30,14 @@ export class StatsDashboard extends Application {
   getData() {
     // All character actors
     console.log(game.actors);
+    let totalpartycurrency = {
+      Platinum:0,
+      Gold:0,
+      Electrum:0,
+      Silver:0,
+      Copper:0
+    };
+    let totalpartygold = 0;
     const players = game.actors.filter(a => a.type === "character");
 
     // List of skills for D&D5e with their ability abbreviations
@@ -97,9 +105,11 @@ const playerData = players.map(actor => {
   if (actor.system.currency) {
     for (const [currencyType, amount] of Object.entries(actor.system.currency)) {
       currencyAmounts[currency[currencyType]] = amount ?? 0;
+      totalpartycurrency[currency[currencyType]] += currencyAmounts[currency[currencyType]];
       goldTotal += currencyAmounts[currency[currencyType]] * currency_conversion[currencyType];
     }
     currencyAmounts['Total (in Gold)'] = goldTotal;
+    totalpartygold += goldTotal;
   }
 
   return {
@@ -108,6 +118,15 @@ const playerData = players.map(actor => {
     skills: skillScores,
     currency: currencyAmounts,
   };
+});
+
+totalpartycurrency['Total (in Gold)'] = totalpartygold;
+
+playerData.push({
+  id: "-1",
+  name: "Party",
+  skills: { },
+  currency: totalpartycurrency
 });
 
   return {
