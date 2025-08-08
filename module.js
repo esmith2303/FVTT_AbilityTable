@@ -47,7 +47,8 @@ Hooks.once('ready', async () => {
     let freeSlot = null;
 
     for (let i = 1; i <= slots; i++) {
-      if (!hotbar.has(i)) {
+      // For Foundry VTT, hotbar is a Map, so use get()
+      if (!hotbar.get(i)) {
         freeSlot = i;
         break;
       }
