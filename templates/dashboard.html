@@ -4,20 +4,29 @@
       <tr>
         <th>Skill</th>
         {{#each players}}
-          <th>{{name}}</th>
+          <th>{{this.name}}</th>
         {{/each}}
       </tr>
     </thead>
     <tbody>
-      {{!-- Loop over skills from the first player (index 0) --}}
-      {{#each (keys (lookup (lookup ../players 0) "skills")) as |skillName|}}
-        <tr>
-          <td>{{skillName}}</td>
-          {{#each ../players}}
-            <td>{{lookup this.skills skillName}}</td>
-          {{/each}}
-        </tr>
-      {{/each}}
+      {{#if players.length}}
+        {{#with (lookup players 0)}}
+          {{#if this.skills}}
+            {{#each (keys this.skills) as |skillName|}}
+              <tr>
+                <td>{{skillName}}</td>
+                {{#each ../players}}
+                  <td>{{lookup this.skills skillName}}</td>
+                {{/each}}
+              </tr>
+            {{/each}}
+          {{else}}
+            <tr><td colspan="{{players.length}}">No skills found for first player.</td></tr>
+          {{/if}}
+        {{/with}}
+      {{else}}
+        <tr><td>No players found.</td></tr>
+      {{/if}}
     </tbody>
   </table>
 </div>
