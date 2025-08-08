@@ -12,6 +12,7 @@
         {{#each players}}
         {{#unless (eq name "Party")}}
           <th>{{name}}</th>
+          {{/unless}}
         {{/each}}
       </tr>
     </thead>
@@ -22,6 +23,7 @@
           {{#each ../players}}
           {{#unless (eq name "Party")}}
             <td>{{lookup skills skillName}}</td>
+            {{/unless}}
           {{/each}}
         </tr>
       {{/each}}
