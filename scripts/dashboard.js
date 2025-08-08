@@ -92,7 +92,7 @@ const playerData = players.map(actor => {
     const modString = (mod >= 0 ? "+" : "") + mod;
     skillScores[skills[skillKey]] = `${modString} (${passive})`;
   }
-  const goldTotal = 0;
+  let goldTotal = 0;
   // Process currency - copy all currency key-values or default to 0
   if (actor.system.currency) {
     for (const [currencyType, amount] of Object.entries(actor.system.currency)) {
