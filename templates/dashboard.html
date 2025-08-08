@@ -10,6 +10,7 @@
       <tr>
         <th>Skill</th>
         {{#each players}}
+        {{#unless (eq name "Party")}}
           <th>{{name}}</th>
         {{/each}}
       </tr>
@@ -19,6 +20,7 @@
         <tr>
           <td>{{skillName}}</td>
           {{#each ../players}}
+          {{#unless (eq name "Party")}}
             <td>{{lookup skills skillName}}</td>
           {{/each}}
         </tr>
