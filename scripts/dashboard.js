@@ -122,6 +122,7 @@ const playerData = players.map(actor => {
 });
 
 totalpartycurrency['Total (in Gold)'] = totalpartygold;
+playerData.sort((a, b) => a.name.localeCompare(b.name));
 
 playerData.push({
   id: "-1",
@@ -129,6 +130,7 @@ playerData.push({
   skills: { },
   currency: totalpartycurrency
 });
+
 
   return {
     players: playerData
