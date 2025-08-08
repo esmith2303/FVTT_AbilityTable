@@ -17,6 +17,7 @@ Hooks.once('ready', async () => {
 
 Hooks.on("getSceneControlButtons", (controls) => {
   // Find the "token" control group
+  if (!game.user.isGM) return;
   const tokenControls = controls.find(c => c.name === "token");
   if (tokenControls) {
     tokenControls.tools.push({
