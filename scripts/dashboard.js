@@ -34,45 +34,55 @@ export class StatsDashboard extends Application {
 
     // List of skills for D&D5e with their ability abbreviations
     const skills = {
-        acr: "Acrobatics",
-        ani: "Animal Handling",
-        arc: "Arcana",
-        ath: "Athletics",
-        dec: "Deception",
-        his: "History",
-        ins: "Insight",
-        inm: "Intimidation",
-        inv: "Investigation",
-        med: "Medicine",
-        nat: "Nature",
-        prc: "Perception",
-        prf: "Performance", // duplicate key issue here
-        per: "Persuasion", // last one wins
-        rel: "Religoin",
-        slt: "Slight of Hand",
-        ste: "Stealth",
-        sur: "Survival"
-    };
-
-    return {
-      players: players.map(actor => {
-        // Prepare skill scores
-        let skillScores = {};
-        for (let [skill, ability] of Object.entries(skills)) {
-          const skillData = actor.system.skills?.[skill].mod;
-          const passData  = actor.system.skills?.[skill].passive;
-          skillScores[skill] = (skillData != null && passData != null) 
-          ? `${skillData}(${passData})`
-          : "N/A";
-        }
-
-        return {
-          id: actor.id,
-          name: actor.name,
-          skills: skillScores
-        };
-      }),
-      skills: Object.values(skills)
-    };
-  }
+  acr: "Acrobatics",
+  ani: "Animal Handling",
+  arc: "Arcana",
+  ath: "Athletics",
+  dec: "Deception",
+  his: "History",
+  ins: "Insight",
+  itm: "Intimidation",    // fixed typo: "inm" → "itm"
+  inv: "Investigation",
+  med: "Medicine",
+  nat: "Nature",
+  prc: "Perception",
+  prf: "Performance",
+  per: "Persuasion",
+  rel: "Religion",       // fixed typo "Religoin" → "Religion"
+  sle: "Sleight of Hand",// fixed typo "slt" → "sle"
+  ste: "Stealth",
+  surv: "Survival"       // fixed typo "sur" → "surv"
 }
+
+const playerData = players.map(actor => {
+  let skillScores = {};
+
+  for (let skillKey of Object.keys(skills)) {
+    const skill = actor.system.skills?.[skillKey];
+    if (!skill) {
+      skillScores[skillKey] = "N/A";
+      continue;
+    }
+
+    // Get modifier value (skill.value) — it's the total skill bonus
+    const mod = skill.value ?? 0;
+
+    // Passive perception (and other passive skills) is usually 10 + modifier + other bonuses
+    // The D&D5e system stores passive in `skill.passive` — but let's calculate it just in case:
+    const passive = skill.passive ?? (10 + mod);
+
+    // Format modifier like +3 or -1
+    const modString = (mod >= 0 ? "+" : "") + mod;
+
+    skillScores[skillKey] = `${modString} (${passive})`;
+  }
+
+  return {
+    id: actor.id,
+    name: actor.name,
+    skills: skillScores,
+  };
+});
+
+  console.log(playerData);
+  }}
