@@ -57,3 +57,6 @@ export class StatsDashboard extends Application {
     return data;
   }
 }
+
+// Make the class globally accessible for macros
+window.StatsDashboard = StatsDashboard;
