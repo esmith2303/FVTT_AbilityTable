@@ -29,7 +29,6 @@ export class StatsDashboard extends Application {
 
   getData() {
     // All character actors
-    console.log(game.actors);
     let totalpartycurrency = {
       Platinum:0,
       Gold:0,
