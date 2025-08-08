@@ -26,7 +26,7 @@ thead th {
 }
 
 /* Tabs container - flex layout for buttons */
-.tabs {
+.statstabs {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
@@ -34,7 +34,7 @@ thead th {
 }
 
 /* Tab buttons styling */
-.tabs button {
+.statstabs button {
   max-width: 150px;
   width: auto;
   padding: 6px 12px;
@@ -48,8 +48,8 @@ thead th {
   transition: background-color 0.3s ease;
 }
 
-.tabs button:hover,
-.tabs button.active {
+.statstabs button:hover,
+.statstabs button.active {
   background-color: #444;
   color: white;
   border-color: #222;
