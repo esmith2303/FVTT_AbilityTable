@@ -15,27 +15,23 @@ Hooks.once('ready', async () => {
   window.StatsDashboard = StatsDashboard;
 });
 
-Hooks.on("getSceneControlButtons", controls => {
-  controls.push({
-    name: "stats-dashboard",
-    title: "Stats Dashboard",
-    icon: "fas fa-chart-line",
-    layer: null,
-    tools: [
-      {
-        name: "open-dashboard",
-        title: "Open Stats Dashboard",
-        icon: "fas fa-chart-line",
-        onClick: () => {
-          if (game.user.isGM) { 
-            if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
-            game.statsDashboard.render(true);
-          } else {
-            ui.notifications.warn("Only the GM can open the Stats Dashboard.");
-          }
-        },
-        button: true
+Hooks.on("getSceneControlButtons", (controls) => {
+  // Find the "token" control group
+  const tokenControls = controls.find(c => c.name === "token");
+  if (tokenControls) {
+    tokenControls.tools.push({
+      name: "stats-dashboard",
+      title: "Open Stats Dashboard",
+      icon: "fas fa-chart-line",
+      button: true,  // Important: no submenu, single-click button
+      onClick: () => {
+        if (game.user.isGM) {
+          if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
+          game.statsDashboard.render(true);
+        } else {
+          ui.notifications.warn("Only the GM can open the Stats Dashboard.");
+        }
       }
-    ]
-  });
+    });
+  }
 });
