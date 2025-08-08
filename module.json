@@ -1,6 +1,6 @@
 {
   "name": "stats-dashboard",
-  "title": "Stats Dashboard",
+  "title": "Player Data",
   "description": "A dashboard for the GM to see all players' ability scores in a table.",
   "version": "1.0.51", 
   "authors": [
