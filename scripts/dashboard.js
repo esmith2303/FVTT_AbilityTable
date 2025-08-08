@@ -2,8 +2,8 @@ export class StatsDashboard extends Application {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       id: "stats-dashboard",
-      title: "Player Ability Stats",
-      template: "modules/FVTT_AbilityTable/templates/dashboard.html",
+      title: "Player Stats",
+      template: "modules/stats-dashboard/templates/dashboard.html",
       width: 700,
       height: "auto",
       resizable: true,
