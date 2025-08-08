@@ -9,11 +9,12 @@
       </tr>
     </thead>
     <tbody>
-      {{#each (object-keys ../players.[0].skills)}}
+      {{!-- Iterate over all skill full names --}}
+      {{#each skills}}
       <tr>
-        <td>{{this}}</td>
+        <td>{{this}}</td> <!-- this = full skill name like "Acrobatics" -->
         {{#each ../players}}
-          <td>{{lookup skills this}}</td>
+          <td>{{lookup this.skills this}}</td> <!-- lookup player.skills[this full skill name] -->
         {{/each}}
       </tr>
       {{/each}}

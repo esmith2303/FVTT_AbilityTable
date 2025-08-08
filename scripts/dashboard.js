@@ -73,7 +73,7 @@ const playerData = players.map(actor => {
     const passive = skill.passive ?? (10 + mod);
     // Format modifier like +3 or -1
     const modString = (mod >= 0 ? "+" : "") + mod;
-    skillScores[skillScores[skillKey]] = `${modString} (${passive})`;
+    skillScores[skills[skillKey]] = `${modString} (${passive})`;
   }
 
   return {
