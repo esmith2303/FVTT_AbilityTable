@@ -1,23 +1,24 @@
-.stats-table {
-  border-collapse: collapse;
-  width: 100%;
+.table-container {
+  overflow-y: auto;
+  max-height: 500px;
 }
 
-.stats-table th, .stats-table td {
-  border: 1px solid #666;
-  padding: 4px 8px;
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
   text-align: center;
 }
 
-.stats-table th {
-  background: #333;
+thead th {
+  background-color: #444;
   color: white;
-}
-
-.stats-table tr:nth-child(even) {
-  background: #222;
-}
-
-.stats-table tr:nth-child(odd) {
-  background: #111;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }

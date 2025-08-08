@@ -1,20 +1,22 @@
-<table class="stats-table">
-  <thead>
-    <tr>
-      <th>Ability</th>
-      {{#each characters}}
-        <th>{{name}}</th>
-      {{/each}}
-    </tr>
-  </thead>
-  <tbody>
-    {{#each abilities as |ability idx|}}
+<div class="table-container">
+  <table>
+    <thead>
       <tr>
-        <td>{{ability}}</td>
-        {{#each ../characters}}
-          <td>{{abilities.[idx]}}</td>
+        <th>Skill</th>
+        {{#each players}}
+          <th>{{name}}</th>
         {{/each}}
       </tr>
-    {{/each}}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {{#each skills}}
+      <tr>
+        <td>{{this}}</td>
+        {{#each ../players}}
+          <td>{{this.skills.[@../index]}}</td>
+        {{/each}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

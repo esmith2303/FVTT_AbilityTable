@@ -16,47 +16,59 @@ export class StatsDashboard extends Application {
     super(...args);
 
     // Re-render dashboard whenever actor data changes
-    Hooks.on("updateActor", (actor, data, options, userId) => {
-      if (actor.data.type === "character" && this.rendered) {
-        this.render();
-      }
+    Hooks.on("updateActor", (actor) => {
+      if (actor.data.type === "character" && this.rendered) this.render();
     });
-
-    // Also update when actors are created or deleted
     Hooks.on("createActor", (actor) => {
-      if (actor.data.type === "character" && this.rendered) {
-        this.render();
-      }
+      if (actor.data.type === "character" && this.rendered) this.render();
     });
     Hooks.on("deleteActor", (actor) => {
-      if (actor.data.type === "character" && this.rendered) {
-        this.render();
-      }
+      if (actor.data.type === "character" && this.rendered) this.render();
     });
   }
 
   getData() {
+    // All character actors
     const players = game.actors.filter(a => a.data.type === "character");
 
-    const data = {
-      players: players.map(actor => ({
-        id: actor.id,
-        name: actor.name,
-        abilities: {
-          str: actor.data.data.abilities?.str?.value ?? "N/A",
-          dex: actor.data.data.abilities?.dex?.value ?? "N/A",
-          con: actor.data.data.abilities?.con?.value ?? "N/A",
-          int: actor.data.data.abilities?.int?.value ?? "N/A",
-          wis: actor.data.data.abilities?.wis?.value ?? "N/A",
-          cha: actor.data.data.abilities?.cha?.value ?? "N/A"
-        }
-      })),
-      abilities: ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
+    // List of skills for D&D5e with their ability abbreviations
+    const skills = {
+      acrobatics: "DEX",
+      animalhandling: "WIS",
+      arcana: "INT",
+      athletics: "STR",
+      deception: "CHA",
+      history: "INT",
+      insight: "WIS",
+      intimidation: "CHA",
+      investigation: "INT",
+      medicine: "WIS",
+      nature: "INT",
+      perception: "WIS",
+      performance: "CHA",
+      persuasion: "CHA",
+      religion: "INT",
+      sleightofhand: "DEX",
+      stealth: "DEX",
+      survival: "WIS"
     };
 
-    return data;
+    return {
+      players: players.map(actor => {
+        // Prepare skill scores
+        let skillScores = {};
+        for (let [skill, ability] of Object.entries(skills)) {
+          const skillData = actor.data.data.skills?.[skill];
+          skillScores[skill] = skillData?.total ?? "N/A";
+        }
+
+        return {
+          id: actor.id,
+          name: actor.name,
+          skills: skillScores
+        };
+      }),
+      skills: Object.keys(skills).map(skill => skill.charAt(0).toUpperCase() + skill.slice(1))
+    };
   }
 }
-
-// Make the class globally accessible for macros
-window.StatsDashboard = StatsDashboard;
