@@ -22,7 +22,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
   if (tokenControls) {
     tokenControls.tools.push({
       name: "stats-dashboard",
-      title: "Open Stats Dashboard",
+      title: "Combine Player Data",
       icon: "fas fa-chart-line",
       button: true,  // Important: no submenu, single-click button
       onClick: () => {
