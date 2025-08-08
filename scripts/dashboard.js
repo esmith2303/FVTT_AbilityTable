@@ -56,14 +56,15 @@ export class StatsDashboard extends Application {
 
 const playerData = players.map(actor => {
   let skillScores = {};
+  let currencyAmounts = {};
 
+  // Process skills
   for (let skillKey of Object.keys(skills)) {
     const skill = actor.system.skills?.[skillKey];
     if (!skill) {
       skillScores[skillKey] = "N/A";
       continue;
     }
-    
 
     // Get modifier value (skill.value) — it's the total skill bonus
     const mod = skill.mod ?? skill.modifier ?? 0;
@@ -75,10 +76,19 @@ const playerData = players.map(actor => {
     const modString = (mod >= 0 ? "+" : "") + mod;
     skillScores[skills[skillKey]] = `${modString} (${passive})`;
   }
+
+  // Process currency - copy all currency key-values or default to 0
+  if (actor.system.currency) {
+    for (const [currencyType, amount] of Object.entries(actor.system.currency)) {
+      currencyAmounts[currencyType] = amount ?? 0;
+    }
+  }
+
   return {
     id: actor.id,
     name: actor.name,
     skills: skillScores,
+    currency: currencyAmounts,
   };
 });
 

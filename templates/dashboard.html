@@ -1,3 +1,9 @@
+<div class="tabs">
+  <button class="tab-button" data-tab="skills">Skills</button>
+  <button class="tab-button" data-tab="currency">Currency</button>
+</div>
+
+<div class="tab-content" id="skills">
 {{#if players.length}}
   <table>
     <thead>
@@ -24,3 +30,47 @@
 {{else}}
   <p>No players found</p>
 {{/if}}
+</div>
+
+<div class="tab-content" id="currency" style="display: none;">
+  {{#if players.length}}
+    <table>
+      <thead>
+        <tr>
+          <th>Currency</th>
+          {{#each players}}
+            <th>{{name}}</th>
+          {{/each}}
+        </tr>
+      </thead>
+      <tbody>
+        {{!-- Loop over currency types from the first player --}}
+        {{#each (keys (lookup (lookup players 0) "currency")) as |currencyType|}}
+          <tr>
+            <td>{{currencyType}}</td>
+            {{#each ../players}}
+              <td>{{lookup currency currencyType}}</td>
+            {{/each}}
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>No players found</p>
+  {{/if}}
+</div>
+
+<script>
+  // Simple tab switching logic
+  document.querySelectorAll('.tab-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const tab = button.getAttribute('data-tab');
+
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.style.display = 'none';
+      });
+
+      document.getElementById(tab).style.display = 'block';
+    });
+  });
+</script>
