@@ -29,7 +29,7 @@ export class StatsDashboard extends Application {
 
   getData() {
     // All character actors
-    const players = game.actors.filter(a => a.data.type === "character");
+    const players = game.actors.filter(a => a.type === "character");
 
     // List of skills for D&D5e with their ability abbreviations
     const skills = {
