@@ -11,6 +11,6 @@
   "minimumCoreVersion": "11",
   "compatibleCoreVersion": "11",
   "systems": ["dnd5e"],
-  "manifest": "https://raw.githubusercontent.com/esmith2303/FVTT_AbilityTable/main/module.json",
-  "download": "https://github.com/esmith2303/FVTT_AbilityTable/archive/refs/heads/main.zip"
+  "manifest": "https://raw.githubusercontent.com/esmith2303/FVTT_AbilityTable/master/module.json",
+  "download": "https://github.com/esmith2303/FVTT_AbilityTable/archive/refs/heads/master.zip"
 }
