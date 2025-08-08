@@ -9,11 +9,11 @@
       </tr>
     </thead>
     <tbody>
-      {{#each skills}}
+      {{#each (object-keys ../players.[0].skills)}}
       <tr>
         <td>{{this}}</td>
         {{#each ../players}}
-          <td>{{this.skills.[@../index]}}</td>
+          <td>{{lookup skills this}}</td>
         {{/each}}
       </tr>
       {{/each}}

@@ -71,11 +71,9 @@ const playerData = players.map(actor => {
     // Passive perception (and other passive skills) is usually 10 + modifier + other bonuses
     // The D&D5e system stores passive in `skill.passive` — but let's calculate it just in case:
     const passive = skill.passive ?? (10 + mod);
-    console.log(mod);
     // Format modifier like +3 or -1
     const modString = (mod >= 0 ? "+" : "") + mod;
-    console.log(modString);
-    skillScores[skillKey] = `${modString} (${passive})`;
+    skillScores[skillScores[skillKey]] = `${modString} (${passive})`;
   }
 
   return {
