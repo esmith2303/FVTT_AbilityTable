@@ -3,7 +3,7 @@
   <button class="statstab-button" data-tab="currency">Currency</button>
 </div>
 
-<div class="tab-content" id="skills">
+<div class="statstab-content" id="skills">
 {{#if players.length}}
   <table>
     <thead>
@@ -15,11 +15,9 @@
       </tr>
     </thead>
     <tbody>
-      {{!-- Loop over skill names from the first player --}}
       {{#each (keys (lookup (lookup players 0) "skills")) as |skillName|}}
         <tr>
           <td>{{skillName}}</td>
-          {{!-- Loop over each player to get their value for this skill --}}
           {{#each ../players}}
             <td>{{lookup skills skillName}}</td>
           {{/each}}
@@ -32,7 +30,7 @@
 {{/if}}
 </div>
 
-<div class="statstab-content" id="statscurrency" style="display: none;">
+<div class="statstab-content" id="currency" style="display: none;">
   {{#if players.length}}
     <table>
       <thead>
@@ -44,7 +42,6 @@
         </tr>
       </thead>
       <tbody>
-        {{!-- Loop over currency types from the first player --}}
         {{#each (keys (lookup (lookup players 0) "currency")) as |currencyType|}}
           <tr>
             <td>{{currencyType}}</td>
@@ -66,10 +63,12 @@
     button.addEventListener('click', () => {
       const tab = button.getAttribute('data-tab');
 
+      // Hide all tab contents
       document.querySelectorAll('.statstab-content').forEach(content => {
         content.style.display = 'none';
       });
 
+      // Show the selected tab
       document.getElementById(tab).style.display = 'block';
     });
   });
