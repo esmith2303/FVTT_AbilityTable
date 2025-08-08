@@ -98,7 +98,9 @@ const playerData = players.map(actor => {
     const passive = skill.passive ?? (10 + mod);
     // Format modifier like +3 or -1
     const modString = (mod >= 0 ? "+" : "") + mod;
-    skillScores[skills[skillKey]] = `${modString} (${passive})`;
+    const proficiencySymbol = skill.prof ? " ★" : "";
+
+    skillScores[skills[skillKey]] = `${modString} (${passive})${proficiencySymbol}`;
   }
   let goldTotal = 0;
   // Process currency - copy all currency key-values or default to 0
