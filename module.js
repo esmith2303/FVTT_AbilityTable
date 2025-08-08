@@ -10,8 +10,9 @@ Hooks.once('init', () => {
   window.statsDashboard = null;
 });
 
-Hooks.once('ready', () => {
+Hooks.once('ready', async() => {
   console.log("Stats Dashboard | Module ready");
   // Expose StatsDashboard class globally so macros can access it
   window.StatsDashboard = StatsDashboard;
+  await StatsDashboard.createOrUpdateMacro();
 });
