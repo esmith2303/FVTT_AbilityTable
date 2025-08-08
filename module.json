@@ -2,11 +2,11 @@
   "name": "stats-dashboard",
   "title": "Stats Dashboard",
   "description": "A dashboard for the GM to see all players' ability scores in a table.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "authors": [
     { "name": "Elian Smith" }
   ],
-  "esmodules": ["scripts/dashboard.js"],
+  "esmodules": ["scripts/dashboard.js", "module.js"],
   "styles": ["styles/dashboard.css"],
   "minimumCoreVersion": "11",
   "compatibleCoreVersion": "11",
