@@ -33,6 +33,9 @@ thead th {
   margin-bottom: 16px;
   justify-content: center;
   align-items: center; /* vertically center buttons */
+  height: auto;            /* let container height be based on content */
+  min-height: 0;           /* ensure no min-height forcing stretching */
+  flex-shrink: 0;  
 }
 
 /* Tab buttons styling */

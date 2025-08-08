@@ -54,6 +54,22 @@ export class StatsDashboard extends Application {
   sur: "Survival"       // fixed typo "sur" → "surv"
 }
 
+const currency = {
+pp: "Platinum",
+gp: "Gold",
+ep: "Electrum",
+sp: "Silver",
+cp: "Copper"
+}
+
+const currency_conversion = {
+  pp : 10,
+  gp: 1,
+  ep: 0.5,
+  sp: 0.1,
+  cp: 0.01
+}
+
 const playerData = players.map(actor => {
   let skillScores = {};
   let currencyAmounts = {};
@@ -76,12 +92,14 @@ const playerData = players.map(actor => {
     const modString = (mod >= 0 ? "+" : "") + mod;
     skillScores[skills[skillKey]] = `${modString} (${passive})`;
   }
-
+  const goldTotal = 0;
   // Process currency - copy all currency key-values or default to 0
   if (actor.system.currency) {
     for (const [currencyType, amount] of Object.entries(actor.system.currency)) {
-      currencyAmounts[currencyType] = amount ?? 0;
+      currencyAmounts[currency[currencyType]] = amount ?? 0;
+      goldTotal += currencyAmounts[currency[currencyType]] * currency_conversion[currencyType];
     }
+    currencyAmounts['Total (in Gold)'] = goldTotal;
   }
 
   return {
