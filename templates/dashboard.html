@@ -9,14 +9,14 @@
       </tr>
     </thead>
     <tbody>
-      {{!-- Iterate over all skill full names --}}
-      {{#each skills}}
-      <tr>
-        <td>{{this}}</td> <!-- this = full skill name like "Acrobatics" -->
-        {{#each ../players}}
-          <td>{{lookup this.skills this}}</td> <!-- lookup player.skills[this full skill name] -->
-        {{/each}}
-      </tr>
+      {{!-- Loop over skills from the first player (index 0) --}}
+      {{#each (keys (lookup (lookup ../players 0) "skills")) as |skillName|}}
+        <tr>
+          <td>{{skillName}}</td>
+          {{#each ../players}}
+            <td>{{lookup this.skills skillName}}</td>
+          {{/each}}
+        </tr>
       {{/each}}
     </tbody>
   </table>

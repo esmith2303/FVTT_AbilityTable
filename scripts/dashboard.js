@@ -63,7 +63,7 @@ const playerData = players.map(actor => {
       skillScores[skillKey] = "N/A";
       continue;
     }
-    console.log(skill);
+    
 
     // Get modifier value (skill.value) — it's the total skill bonus
     const mod = skill.mod ?? skill.modifier ?? 0;
@@ -75,7 +75,6 @@ const playerData = players.map(actor => {
     const modString = (mod >= 0 ? "+" : "") + mod;
     skillScores[skills[skillKey]] = `${modString} (${passive})`;
   }
-
   return {
     id: actor.id,
     name: actor.name,

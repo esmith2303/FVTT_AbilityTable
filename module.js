@@ -1,5 +1,9 @@
 import { StatsDashboard } from "./scripts/dashboard.js";
 
+Handlebars.registerHelper('keys', function (obj) {
+  return Object.keys(obj);
+});
+
 Hooks.once('init', () => {
   console.log("Stats Dashboard | Initializing module");
   // Register a global variable to hold the dashboard instance
