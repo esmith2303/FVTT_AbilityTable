@@ -23,14 +23,14 @@ Hooks.once('ready', async () => {
   }`;
 
   let macro = game.macros.find(m => m.name === macroName && m.author.id === game.user.id);
-
+  console.log(macro)
   if (macro) {
     // update macro's command & image
     await macro.update({ command, img: "icons/svg/statue.svg" });
 
     // get hotbar mapping
     const hotbar = game.user.getFlag("core", "hotbar") || {};
-
+    console.log(hotbar);
     // check if macro is already on hotbar
     const isOnHotbar = Object.values(hotbar).includes(macro.id);
 
@@ -43,6 +43,7 @@ Hooks.once('ready', async () => {
           break;
         }
       }
+      console.log(freeSlot);
       if (freeSlot !== null) {
         hotbar[freeSlot] = macro.id;
         await game.user.setFlag("core", "hotbar", hotbar);
@@ -65,6 +66,7 @@ Hooks.once('ready', async () => {
 
     // Assign to hotbar
     const hotbar = game.user.getFlag("core", "hotbar") || {};
+    console.log(hotbar);
     const maxSlots = 50;
     let freeSlot = null;
     for (let i = 1; i <= maxSlots; i++) {
