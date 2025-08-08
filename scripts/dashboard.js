@@ -114,35 +114,4 @@ const playerData = players.map(actor => {
     players: playerData
   };
   }
-static async createOrUpdateMacro() {
-    const macroName = "Open Stats Dashboard";
-    const command = `(() => {
-     if (window.StatsDashboard) {
-        if (!window.statsDashboardInstance) {
-          window.statsDashboardInstance = new window.StatsDashboard();
-        }
-        window.statsDashboardInstance.render(true);
-      } else {
-        ui.notifications.error("StatsDashboard class not loaded yet!");
-      }
-    })();`;
-
-    let macro = game.macros.find(m => m.name === macroName);
-
-    if (macro) {
-      if (macro.data.command !== command) {
-        await macro.update({ command });
-        console.log(`Updated macro '${macroName}'`);
-      }
-    } else {
-      macro = await Macro.create({
-        name: macroName,
-        type: "script",
-        scope: "global",
-        command,
-        img: "icons/svg/dice-target.svg",
-      });
-      console.log(`Created macro '${macroName}'`);
-    }
-  }
 }
