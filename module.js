@@ -15,8 +15,6 @@ Hooks.once('ready', async () => {
   window.StatsDashboard = StatsDashboard;
 
   const macroName = "Open Stats Dashboard";
-  let macro = game.macros.find(m => m.name === macroName && m.author.id === game.user.id);
-
   const command = `if (game.user.isGM) { 
     if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
     game.statsDashboard.render(true);
@@ -24,16 +22,17 @@ Hooks.once('ready', async () => {
     ui.notifications.warn("Only the GM can open the Stats Dashboard.");
   }`;
 
+  let macro = game.macros.find(m => m.name === macroName && m.author.id === game.user.id);
+
   if (macro) {
-    await macro.update({
-      command: command,
-      img: "icons/svg/statue.svg"
-    });
+    // update macro's command & image
+    await macro.update({ command, img: "icons/svg/statue.svg" });
 
-    const hotbar = game.user.hotbar;
-    const macroId = macro.id;
+    // get hotbar mapping
+    const hotbar = game.user.getFlag("core", "hotbar") || {};
 
-    const isOnHotbar = Object.entries(hotbar).some(([, id]) => id === macroId);
+    // check if macro is already on hotbar
+    const isOnHotbar = Object.values(hotbar).includes(macro.id);
 
     if (!isOnHotbar) {
       const maxSlots = 50;
@@ -45,24 +44,27 @@ Hooks.once('ready', async () => {
         }
       }
       if (freeSlot !== null) {
-        await game.user.updateHotbarMacro(macro.id, freeSlot);
+        hotbar[freeSlot] = macro.id;
+        await game.user.setFlag("core", "hotbar", hotbar);
         console.log(`Assigned existing Stats Dashboard macro to hotbar slot ${freeSlot}`);
       } else {
-        console.warn("No free hotbar slots available to assign the existing Stats Dashboard macro.");
+        console.warn("No free hotbar slots available to assign existing macro.");
       }
     } else {
-      console.log("Stats Dashboard macro already on hotbar; no action taken.");
+      console.log("Macro already assigned to hotbar, no changes made.");
     }
   } else {
+    // Create macro
     macro = await Macro.create({
       name: macroName,
       type: "script",
       scope: "global",
-      command: command,
+      command,
       img: "icons/svg/statue.svg"
     });
 
-    const hotbar = game.user.hotbar;
+    // Assign to hotbar
+    const hotbar = game.user.getFlag("core", "hotbar") || {};
     const maxSlots = 50;
     let freeSlot = null;
     for (let i = 1; i <= maxSlots; i++) {
@@ -72,10 +74,11 @@ Hooks.once('ready', async () => {
       }
     }
     if (freeSlot !== null) {
-      await game.user.updateHotbarMacro(macro.id, freeSlot);
+      hotbar[freeSlot] = macro.id;
+      await game.user.setFlag("core", "hotbar", hotbar);
       console.log(`Created and assigned new Stats Dashboard macro to hotbar slot ${freeSlot}`);
     } else {
-      console.warn("No free hotbar slots available to assign the new Stats Dashboard macro.");
+      console.warn("No free hotbar slots available for new macro.");
     }
   }
 });
