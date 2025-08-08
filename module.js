@@ -33,7 +33,6 @@ Hooks.once('ready', async () => {
     const hotbar = game.user.hotbar;
     const macroId = macro.id;
 
-    // Use Object.entries since hotbar is an object, not a Map
     const isOnHotbar = Object.entries(hotbar).some(([, id]) => id === macroId);
 
     if (!isOnHotbar) {
@@ -46,7 +45,7 @@ Hooks.once('ready', async () => {
         }
       }
       if (freeSlot !== null) {
-        await macro.assignHotbar(freeSlot);
+        await game.user.updateHotbarMacro(macro.id, freeSlot);
         console.log(`Assigned existing Stats Dashboard macro to hotbar slot ${freeSlot}`);
       } else {
         console.warn("No free hotbar slots available to assign the existing Stats Dashboard macro.");
@@ -73,7 +72,7 @@ Hooks.once('ready', async () => {
       }
     }
     if (freeSlot !== null) {
-      await macro.assignHotbar(freeSlot);
+      await game.user.updateHotbarMacro(macro.id, freeSlot);
       console.log(`Created and assigned new Stats Dashboard macro to hotbar slot ${freeSlot}`);
     } else {
       console.warn("No free hotbar slots available to assign the new Stats Dashboard macro.");
