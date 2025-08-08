@@ -8,6 +8,6 @@ Hooks.once('init', () => {
 
 Hooks.once('ready', () => {
   console.log("Stats Dashboard | Module ready");
-  // Optionally you could create and render dashboard here automatically,
-  // but better to open via macro so DM controls it.
+  // Expose StatsDashboard class globally so macros can access it
+  window.StatsDashboard = StatsDashboard;
 });
