@@ -34,24 +34,24 @@ export class StatsDashboard extends Application {
 
     // List of skills for D&D5e with their ability abbreviations
     const skills = {
-      acrobatics: "DEX",
-      animalhandling: "WIS",
-      arcana: "INT",
-      athletics: "STR",
-      deception: "CHA",
-      history: "INT",
-      insight: "WIS",
-      intimidation: "CHA",
-      investigation: "INT",
-      medicine: "WIS",
-      nature: "INT",
-      perception: "WIS",
-      performance: "CHA",
-      persuasion: "CHA",
-      religion: "INT",
-      sleightofhand: "DEX",
-      stealth: "DEX",
-      survival: "WIS"
+        acr: "Acrobatics",
+        ani: "Animal Handling",
+        arc: "Arcana",
+        ath: "Athletics",
+        dec: "Deception",
+        his: "History",
+        ins: "Insight",
+        inm: "Intimidation",
+        inv: "Investigation",
+        med: "Medicine",
+        nat: "Nature",
+        prc: "Perception",
+        prf: "Performance", // duplicate key issue here
+        per: "Persuasion", // last one wins
+        rel: "Religoin",
+        slt: "Slight of Hand",
+        ste: "Stealth",
+        sur: "Survival"
     };
 
     return {
@@ -59,8 +59,11 @@ export class StatsDashboard extends Application {
         // Prepare skill scores
         let skillScores = {};
         for (let [skill, ability] of Object.entries(skills)) {
-          const skillData = actor.system.skills?.[skill];
-          skillScores[skill] = skillData?.total ?? "N/A";
+          const skillData = actor.system.skills?.[skill].mod;
+          const passData  = actor.system.skills?.[skill].passive;
+          skillScores[skill] = (skillData != null && passData != null) 
+          ? `${skillData}(${passData})`
+          : "N/A";
         }
 
         return {
@@ -69,7 +72,7 @@ export class StatsDashboard extends Application {
           skills: skillScores
         };
       }),
-      skills: Object.keys(skills).map(skill => skill.charAt(0).toUpperCase() + skill.slice(1))
+      skills: Object.values(skills)
     };
   }
 }
