@@ -24,7 +24,7 @@ Hooks.once('ready', async () => {
 
   let macro = game.macros.find(m => m.name === macroName && m.author.id === game.user.id);
   console.log(macro);
-  console.log(game.user.getFlag("hotbar"));
+  console.log(game.user.getFlag("core", "hotbar"));
   console.log(ui.hotbar.pages);
   if (macro) {
     // update macro's command & image
