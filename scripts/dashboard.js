@@ -1,55 +1,59 @@
-class StatsDashboard extends Application {
+export class StatsDashboard extends Application {
   static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
+    return mergeObject(super.defaultOptions, {
       id: "stats-dashboard",
-      template: "modules/stats-dashboard/templates/dashboard.html",
-      title: "Stats Dashboard",
-      width: 800,
-      height: "auto"
+      title: "Player Ability Stats",
+      template: "modules/FVTT_AbilityTable/templates/dashboard.html",
+      width: 700,
+      height: "auto",
+      resizable: true,
+      minimizable: true,
+      scrollY: [".table-container"],
+    });
+  }
+
+  constructor(...args) {
+    super(...args);
+
+    // Re-render dashboard whenever actor data changes
+    Hooks.on("updateActor", (actor, data, options, userId) => {
+      if (actor.data.type === "character" && this.rendered) {
+        this.render();
+      }
+    });
+
+    // Also update when actors are created or deleted
+    Hooks.on("createActor", (actor) => {
+      if (actor.data.type === "character" && this.rendered) {
+        this.render();
+      }
+    });
+    Hooks.on("deleteActor", (actor) => {
+      if (actor.data.type === "character" && this.rendered) {
+        this.render();
+      }
     });
   }
 
   getData() {
-    // Get all player-owned characters
-    const characters = game.actors.filter(a => a.hasPlayerOwner);
+    const players = game.actors.filter(a => a.data.type === "character");
 
-    // Ability score keys
-    const abilities = ["str", "dex", "con", "int", "wis", "cha"];
-
-    // Build table data
-    return {
-      characters: characters.map(c => ({
-        name: c.name,
-        abilities: abilities.map(ab => c.system.abilities[ab]?.value ?? "")
+    const data = {
+      players: players.map(actor => ({
+        id: actor.id,
+        name: actor.name,
+        abilities: {
+          str: actor.data.data.abilities?.str?.value ?? "N/A",
+          dex: actor.data.data.abilities?.dex?.value ?? "N/A",
+          con: actor.data.data.abilities?.con?.value ?? "N/A",
+          int: actor.data.data.abilities?.int?.value ?? "N/A",
+          wis: actor.data.data.abilities?.wis?.value ?? "N/A",
+          cha: actor.data.data.abilities?.cha?.value ?? "N/A"
+        }
       })),
-      abilities
+      abilities: ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
     };
+
+    return data;
   }
 }
-
-Hooks.on("ready", () => {
-  if (!game.user.isGM) return;
-
-  // Store a global reference
-  game.statsDashboard = new StatsDashboard();
-
-  // Auto-create macro for GM
-  let macroName = "Open Stats Dashboard";
-  let macro = game.macros.find(m => m.name === macroName && m.author.id === game.user.id);
-  if (!macro) {
-    Macro.create({
-      name: macroName,
-      type: "script",
-      scope: "global",
-      command: `if (game.user.isGM) { 
-                  if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
-                  game.statsDashboard.render(true);
-                } else {
-                  ui.notifications.warn("Only the GM can open the Stats Dashboard.");
-                }`,
-      img: "icons/svg/statue.svg"
-    }).then(m => {
-      m.assignHotbar(1); // Assign to hotbar slot 1
-    });
-  }
-});
