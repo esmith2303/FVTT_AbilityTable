@@ -20,22 +20,14 @@ Hooks.on("getSceneControlButtons", controls => {
     name: "stats-dashboard",
     title: "Stats Dashboard",
     icon: "fas fa-chart-line",
-    layer: "controls",
-    tools: [
-      {
-        name: "open-stats-dashboard",
-        title: "Open Stats Dashboard",
-        icon: "fas fa-chart-bar",
-        button: true,
-        onClick: () => {
-          if (game.user.isGM) { 
-            if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
-            game.statsDashboard.render(true);
-          } else {
-            ui.notifications.warn("Only the GM can open the Stats Dashboard.");
-          }
-        }
+    button: true,
+    onClick: () => {
+      if (game.user.isGM) { 
+        if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
+        game.statsDashboard.render(true);
+      } else {
+        ui.notifications.warn("Only the GM can open the Stats Dashboard.");
       }
-    ]
+    }
   });
 });
