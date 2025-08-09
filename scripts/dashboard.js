@@ -84,7 +84,7 @@ const currency_conversion = {
 const playerData = players.map(actor => {
   let skillScores = {};
   let currencyAmounts = {};
-
+  console.log(skill)
   // Process skills
   for (let skillKey of Object.keys(skills)) {
     const skill = actor.system.skills?.[skillKey];
@@ -92,6 +92,7 @@ const playerData = players.map(actor => {
       skillScores[skillKey] = "N/A";
       continue;
     }
+    console.log(skill);
     const exp = skill.expertise ?? skill.exp ?? skill.expert ?? 0;
     // Get modifier value (skill.value) — it's the total skill bonus
     const mod = (skill.mod ?? skill.modifier ?? 0) + skill.proficient + exp; //add prof a expertise
