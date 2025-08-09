@@ -37,7 +37,11 @@ export class StatsDashboard extends Application {
       Copper:0
     };
     let totalpartygold = 0;
-    const players = game.actors.filter(a => a.type === "character");
+    const validSubstrings = ["karl", "gobb", "odd", "alisker"];
+    const players = game.actors.filter(a =>
+      a.type === "character" &&
+      validSubstrings.some(sub => a.name.toLowerCase().includes(sub))
+    );
 
     // List of skills for D&D5e with their ability abbreviations
     const skills = {
