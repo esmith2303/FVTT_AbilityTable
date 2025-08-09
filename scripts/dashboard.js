@@ -92,9 +92,10 @@ const playerData = players.map(actor => {
       skillScores[skillKey] = "N/A";
       continue;
     }
-
+    const exp = skill.expertise ?? skill.exp ?? skill.expert ?? 0;
     // Get modifier value (skill.value) — it's the total skill bonus
-    const mod = skill.mod ?? skill.modifier ?? 0;
+    const mod = (skill.mod ?? skill.modifier ?? 0) + skill.proficient + exp; //add prof a expertise
+
 
     // Passive perception (and other passive skills) is usually 10 + modifier + other bonuses
     // The D&D5e system stores passive in `skill.passive` — but let's calculate it just in case:
