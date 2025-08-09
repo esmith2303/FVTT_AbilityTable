@@ -91,8 +91,9 @@ const playerData = players.map(actor => {
       skillScores[skillKey] = "N/A";
       continue;
     }
-    console.log(skill);
+    
     const exp = skill.expertise ?? skill.exp ?? skill.expert ?? 0;
+    console.log(exp);
     // Get modifier value (skill.value) — it's the total skill bonus
     const mod = (skill.mod ?? skill.modifier ?? 0) + skill.proficient + exp; //add prof a expertise
 
