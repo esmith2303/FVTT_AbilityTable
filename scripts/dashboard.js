@@ -84,7 +84,6 @@ const currency_conversion = {
 const playerData = players.map(actor => {
   let skillScores = {};
   let currencyAmounts = {};
-  console.log(skill)
   // Process skills
   for (let skillKey of Object.keys(skills)) {
     const skill = actor.system.skills?.[skillKey];
