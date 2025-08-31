@@ -17,7 +17,9 @@ Hooks.once('ready', async () => {
 
 Hooks.on("getSceneControlButtons", (controls) => {
   if (!game.user.isGM) return;
-
+  console.log("Stats Dashboard | controls object:", controls);
+  console.log("Stats Dashboard | controls keys:", Object.keys(controls));
+  console.log("Stats Dashboard | controls values:", Object.values(controls));
   // controls is now a ControlsReference object, not an array.
   // You can use controls.tools to inject custom buttons.
   const tokenGroup = Object.values(controls).find(c => c.name === "token");
