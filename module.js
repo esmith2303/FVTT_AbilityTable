@@ -20,18 +20,22 @@ Hooks.on("getSceneControlButtons", (controls, options) => {
 
   // controls is now a ControlsReference object, not an array.
   // You can use controls.tools to inject custom buttons.
-  controls.tools.push({
-    name: "stats-dashboard",
-    title: "Combine Player Data",
+  controlsReference.controls.push({
+    name: "stats-dashboard-group",
+    title: "Stats",
     icon: "fas fa-chart-line",
-    button: true,
-    onClick: () => {
-      if (game.user.isGM) {
-        if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
-        game.statsDashboard.render(true);
-      } else {
-        ui.notifications.warn("Only the GM can open the Stats Dashboard.");
+    layer: null,
+    tools: [
+      {
+        name: "stats-dashboard",
+        title: "Combine Player Data",
+        icon: "fas fa-chart-line",
+        button: true,
+        onClick: () => {
+          if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
+          game.statsDashboard.render(true);
+        }
       }
-    }
+    ]
   });
 });
