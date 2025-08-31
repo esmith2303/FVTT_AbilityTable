@@ -15,27 +15,23 @@ Hooks.once('ready', async () => {
   window.StatsDashboard = StatsDashboard;
 });
 
-Hooks.on("getSceneControlButtons", (controls, options) => {
+Hooks.on("getSceneControlButtons", (controls) => {
   if (!game.user.isGM) return;
 
   // controls is now a ControlsReference object, not an array.
   // You can use controls.tools to inject custom buttons.
-  controlsReference.controls.push({
-    name: "stats-dashboard-group",
-    title: "Stats",
-    icon: "fas fa-chart-line",
-    layer: null,
-    tools: [
-      {
-        name: "stats-dashboard",
-        title: "Combine Player Data",
-        icon: "fas fa-chart-line",
-        button: true,
-        onClick: () => {
-          if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
-          game.statsDashboard.render(true);
-        }
+  const tokenControls = controls.find(c => c.name === "token");
+
+  if (tokenControls) {
+    tokenControls.tools.push({
+      name: "stats-dashboard",
+      title: "Combine Player Data",
+      icon: "fas fa-chart-line",
+      button: true,
+      onClick: () => {
+        if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
+        game.statsDashboard.render(true);
       }
-    ]
-  });
+    });
+  }
 });
