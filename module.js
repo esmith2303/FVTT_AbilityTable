@@ -22,9 +22,9 @@ Hooks.on("getSceneControlButtons", (controls) => {
   console.log("Stats Dashboard | controls values:", Object.values(controls));
   // controls is now a ControlsReference object, not an array.
   // You can use controls.tools to inject custom buttons.
-  const tokenGroup = Object.values(controls).find(c => c.name === "token");
-  if (tokenGroup) {
-    tokenGroup.tools.push({
+  const tokenControls = controls["tokens"];
+  if (tokenControls) {
+    tokenControls.tools["stats-dashboard"] = {
       name: "stats-dashboard",
       title: "Combine Player Data",
       icon: "fas fa-chart-line",
@@ -33,6 +33,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
         if (!game.statsDashboard) game.statsDashboard = new StatsDashboard();
         game.statsDashboard.render(true);
       }
-    });
+    };
   }
+
+  console.log("Stats Dashboard | updated tokenControls:", tokenControls);
 });
