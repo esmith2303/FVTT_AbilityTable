@@ -1,4 +1,5 @@
 {
+  "id": "5e-party-stats", 
   "name": "stats-dashboard",
   "title": "Player Data",
   "description": "A dashboard for the GM to see all players' Data scores in a table.",
