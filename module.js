@@ -20,10 +20,9 @@ Hooks.on("getSceneControlButtons", (controls) => {
 
   // controls is now a ControlsReference object, not an array.
   // You can use controls.tools to inject custom buttons.
-  const tokenControls = controls.find(c => c.name === "token");
-
-  if (tokenControls) {
-    tokenControls.tools.push({
+  const tokenGroup = Object.values(controls).find(c => c.name === "token");
+  if (tokenGroup) {
+    tokenGroup.tools.push({
       name: "stats-dashboard",
       title: "Combine Player Data",
       icon: "fas fa-chart-line",
