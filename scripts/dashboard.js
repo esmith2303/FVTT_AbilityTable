@@ -37,7 +37,7 @@ export class StatsDashboard extends Application {
       Copper:0
     };
     let totalpartygold = 0;
-    const validSubstrings = ["karl", "gobb", "odd", "alisker"];
+    const validSubstrings = ["karl", "gobb", "odd", "alisker", "rogar"];
     const players = game.actors.filter(a =>
       a.type === "character" &&
       validSubstrings.some(sub => a.name.toLowerCase().includes(sub))
